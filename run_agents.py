@@ -29,7 +29,8 @@ async def run_step(agents: int, sizes_kb: list[int], host: str, port: int) -> li
     # Each agent holds a worker for its lifetime, so workers == agents.
     pool = ProcessPoolExecutor(max_workers=agents, mp_context=multiprocessing.get_context("spawn"))
     # redis-py's async pool raises past 100 connections by default; size it for N concurrent calls.
-    factory = RedisExchangeFactory(host, port, max_connections=agents + 10)
+    # redis-py 8 defaults socket_timeout to 5s, which kills academy's blocking BLPOP on idle mailboxes.
+    factory = RedisExchangeFactory(host, port, max_connections=agents + 10, socket_timeout=None)
     records = []
     async with await Manager.from_exchange_factory(factory=factory, executors=pool) as manager:
         start = time.perf_counter()

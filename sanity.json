@@ -1,0 +1,41 @@
+{
+  "description": "Process-per-agent echo test (run_agents.py via test.sh), agent counts doubled until failure",
+  "date": "2026-11-13",
+  "system": {
+    "machine": "Perlmutter CPU node, interactive QOS",
+    "cores": 256,
+    "redis_server": "7.4.2",
+    "redis_py": "8.1.0",
+    "academy_py": "1.0.0",
+    "python": "3.13.13"
+  },
+  "per_run_timeout_s": 600,
+  "sweeps": [
+    {
+      "node": "nid200025",
+      "slurm_job": 61237808,
+      "socket_timeout": "redis-py default (5s)",
+      "runs": [
+        {"agents": 1, "ok": true, "replies": 1, "time_s": 15.7},
+        {"agents": 2, "ok": true, "replies": 2, "time_s": 20.1},
+        {"agents": 4, "ok": true, "replies": 4, "time_s": 14.3},
+        {"agents": 8, "ok": true, "replies": 8, "time_s": 18.1},
+        {"agents": 16, "ok": true, "replies": 16, "time_s": 19.9},
+        {"agents": 32, "ok": true, "replies": 32, "time_s": 19.7},
+        {"agents": 64, "ok": true, "replies": 64, "time_s": 23.0},
+        {"agents": 128, "ok": false, "replies": 0, "time_s": 600.2,
+         "failure": "redis.exceptions.TimeoutError: Timeout reading from localhost:6390 (blocking BLPOP hit redis-py's 5s socket_timeout); run hung until the 600s timeout"}
+      ]
+    },
+    {
+      "node": "nid200026",
+      "slurm_job": 61238410,
+      "socket_timeout": "None",
+      "runs": [
+        {"agents": 128, "ok": true, "replies": 128, "time_s": 38.9},
+        {"agents": 256, "ok": true, "replies": 256, "time_s": 162.2},
+        {"agents": 512, "ok": true, "replies": 512, "time_s": 352.0}
+      ]
+    }
+  ]
+}
