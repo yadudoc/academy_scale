@@ -1,7 +1,7 @@
 # academy-scale — Phase 1 plan: (1) agent-count perf test, (2) vLLM + pi-agents demo
 
 ## Context
-Goal: evidence that Academy can drive ~100k-agent science campaigns on HPC (Aurora). This plan covers only the first two pieces; hierarchy/2-machine/hosted-exchange work comes after.
+Goal: Demonstrate that Academy can drive ~100k-agent science campaigns on HPC (Aurora). This plan covers only the first two pieces; hierarchy/2-machine/hosted-exchange work comes after.
 
 Decisions already made:
 - Target: **Aurora (PBS, Intel XPU)**; everything also runs on the laptop at small N (same code, different config).
